@@ -1,7 +1,11 @@
-h1 {
-  color: blue;
-}
 
+
+.expensive-keg {
+  color: gold;
+}
+.strong-keg {
+  font-style: italic;
+}
 .selected {
  color: #22bdf0;
 }
@@ -21,4 +25,14 @@ h1 {
 .filter {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.low-keg {
+  color: red;
+}
+.cheap-keg {
+  color: green;
+}
+
+.progress {
+  text-align: center;
 }

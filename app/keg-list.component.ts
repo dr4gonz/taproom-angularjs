@@ -13,26 +13,44 @@ import { FilterPipe } from './filter.pipe';
   pipes: [FilterPipe],
   directives: [KegComponent, NewKegComponent, EditKegDetailsComponent, PintComponent],
   template: `
-  <keg-display *ngFor="#currentKeg of kegList"
-    (click)="kegClicked(currentKeg)"
-    [class.selected]="currentKeg === selectedKeg"
-    [keg]="currentKeg">
-  </keg-display>
-  <pint-display *ngIf="selectedKeg"
-    [keg]="selectedKeg">
-  </pint-display>
-  <div>
-    <edit-keg-details *ngIf="selectedKeg" [keg]="selectedKeg"></edit-keg-details>
+  <div class="row">
+    <h3>Current Tapped Kegs: </h3>
+    <div class="col-md-10">
+      <keg-display *ngFor="#currentKeg of kegList"
+        (click)="kegClicked(currentKeg)"
+        [class.selected]="currentKeg === selectedKeg"
+        [class.expensive-keg]="currentKeg.price > 5"
+        [class.strong-keg]="currentKeg.alcohol > 6"
+        [keg]="currentKeg">
+      </keg-display>
+    </div>
   </div>
-  <div>
-    <new-keg (onSubmitNewKeg)="createKeg($event)"></new-keg>
+  <div class="row">
+    <div class="col-md-10">
+      <pint-display *ngIf="selectedKeg"
+        [keg]="selectedKeg">
+      </pint-display>
+    </div>
   </div>
-  <keg-display *ngFor="#currentKeg of kegList | filter:filterLow"
-    (click)="kegClicked(currentKeg)"
-    [class.selected]="currentKeg === selectedKeg"
-    [keg]="currentKeg">
-  </keg-display>
-
+  <div class="row">
+    <div class="col-md-4">
+      <edit-keg-details *ngIf="selectedKeg" [keg]="selectedKeg"></edit-keg-details>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <new-keg (onSubmitNewKeg)="createKeg($event)"></new-keg>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-10">
+      <h3>Low Kegs: </h3>
+      <keg-display *ngFor="#currentKeg of kegList | filter:filterLow"
+        [class.low-keg]="currentKeg"
+        [keg]="currentKeg">
+      </keg-display>
+    </div>
+  </div>
   `
 })
 export class KegListComponent {
@@ -40,6 +58,7 @@ export class KegListComponent {
   public onKegSelect: EventEmitter<Keg>;
   public selectedKeg: Keg;
   public filterLow: number = 10;
+  public expensiveLimit: number = 5;
   constructor() {
     this.onKegSelect = new EventEmitter();
   }

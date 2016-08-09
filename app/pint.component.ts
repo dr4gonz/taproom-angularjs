@@ -5,12 +5,18 @@ import { Keg } from './keg.model';
   selector: 'pint-display',
   inputs: ['keg'],
   template: `
-  <button (click)="servePint()">Serve</button>
+  <div class="col-md-12">
+    <button class="btn btn-warning btn-lg btn-block"(click)="servePint()">Beer Me!</button>
+    <h4>Total: $\{{total}}</h4>
+  </div>
   `
 })
 export class PintComponent {
   public keg: Keg;
+  public total: number = 0;
   servePint(){
     this.keg.pints -= 1;
+    this.total += this.keg.price;
+    console.log(this.total);
   }
 }
